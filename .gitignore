@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.sqlite3
+
+# Environment
+.env
+.venv/
+venv/
+env/
+*.env
+
+# Flask instance folder (for DBs, configs, etc.)
+instance/
+
+# VSCode and other editor junk
+.vscode/
+*.swp
+.DS_Store
+.idea/
+
+# Byte-compiled files
+*.egg-info/
+.eggs/
+*.bak
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# Logs
+*.log
