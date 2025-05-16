@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
+from flask_login import UserMixin
+from sqlalchemy.sql import func
+
 
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
