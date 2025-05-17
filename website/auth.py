@@ -14,11 +14,23 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        user = User.query.filter_by(email=email).first()
+
+        if not user or not check_password_hash(user.password, password):
+            flash("You have entered an invalid username or password.", "error")
+            return render_template("login.html", email=email)
+        else:
+            flash("Welcome back, Tracker", "success")
+            login_user(user)
+            return redirect(url_for("views.index"))
+        
     return render_template("login.html")
 
 @auth.route("/logout")
+@login_required
 def logout():
-    return render_template("logout.html")
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 @auth.route("/password", methods=["GET", "POST"])
 def password():
