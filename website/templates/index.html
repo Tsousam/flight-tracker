@@ -1,36 +1,56 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    My Portfolio
+    My Flights
 {% endblock %}
 
 {% block main %}
     <div class="container">
-        <h2>My Portfolio</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Symbol</th>
-                    <th>Price</th>
-                    <th>Ammount</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--{% for row in stock %}
-                <tr>
-                    <td>{{ row.name }}</td>
-                </tr>
-                {% endfor %} -->
-            </tbody>
-        </table>
+        {% if flights|length == 0 %}
+            <div class="text-center mt-5">
+                <a href="{{ url_for('views.search_flights') }}" class="btn btn-primary">
+                    Start Tracking Flights
+                </a>
+            </div>
+        {% else %}
+            <h2>Tracking</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                            <th>Flexibility</th>
+                            <th>Weekdays</th>
+                            <th>Weekends</th>
+                            <th>Current Price</th>
+                            <th>Last checked</th>
+                            <th>Book It</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for flight in flights %}
+                        <tr>
+                            <td>{{ flight.origin }}</td>
+                            <td>{{ flight.destination }}</td>
+                            <td>{{ flight.departure_date }}</td>
+                            <td>{{ flight.flex_days }}</td>
+                            <td>{{ flight.weekdays }}</td>
+                            <td>{{ flight.weekends }}</td>
+                            <td>{{ flight.current_price }}</td>
+                            <td>{{ flight.last_checked }}</td>
+                            <td>{{ flight.booking_link }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        {% endif %}
     </div>
 
-    <div class="container">
+    <!--<div class="container">
         <h2>Balance:</h2>
         <h2>Total:</h2>
         <br>
         <br>
-    </div>
+    </div>-->
 {% endblock %}
