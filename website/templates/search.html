@@ -1,14 +1,40 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Search for flights
+    Flight Search
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="/static/css/awesomplete.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.4.0/air-datepicker.css">
 {% endblock %}
 
 {% block main %}
-    <head>
-    </head>
-    <body>
-        <h1>Template</h1>
-        <p>This is a blank template for a web page.</p>
-    </body>
+    <form action="/search" method="post">
+        <div class="mb-3">
+            <input id="departure" autofocus class="form-control mx-auto w-auto" name="departure" placeholder="Departure"/>
+        </div>
+        <div class="mb-3">
+            <input id="destination" class="form-control mx-auto w-auto" name="destination" placeholder="Destination"/>
+        </div>
+        <div class="p-5">
+            <div class="container">
+                <div class="box">
+                    <input type="text" id="minMaxExample" class="form-control" placeholder="Select Date Range">
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-primary" type="submit">Start Tracking</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/rangePlugin.js"></script>
+
+  <script src="/static/js/awesomplete.js"></script>
+  <script src="/static/js/main.js" defer></script>
 {% endblock %}
