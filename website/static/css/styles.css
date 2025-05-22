@@ -47,6 +47,20 @@ tbody tr:nth-of-type(odd) {
     width: 90%;
 }
 
+#form-container {
+    position: relative;
+    max-width: 70%;
+    text-align:center;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+}
+
+#page-container {
+	position: relative;
+	min-height: 100vh;
+}
+
 .alert {
   padding: 10px;
   border-radius: 4px;
