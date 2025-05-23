@@ -99,7 +99,7 @@
 		}
 		
 		.awesomplete li[aria-selected="true"] mark {
-			background: hsl(86, 100%, 21%);
+			background: transparent;
 			color: inherit;
 		}
 

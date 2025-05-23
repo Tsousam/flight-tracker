@@ -1,17 +1,5 @@
-var input = document.getElementById("departure");
-new Awesomplete(input, {
-	list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-});
-
-
-var input = document.getElementById("destination");
-new Awesomplete(input, {
-	list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-});
-
-
-// Flatpickr setup
-flatpickr("#departureDate", {
+// Datepicker for Departure Date
+flatpickr("#departure_date", {
   dateFormat: "d/m/Y",
   altFormat: "l, d/m/Y",
   minDate: new Date(), 
@@ -21,8 +9,8 @@ flatpickr("#departureDate", {
   altInput: true
 });
 
-// Flatpickr setup
-flatpickr("#dateRange", {
+// Datepicker for Date Range
+flatpickr("#is_date_range", {
   mode: "range",
   dateFormat: "d/m/Y",
   altFormat: "l, d/m/Y",
@@ -34,24 +22,8 @@ flatpickr("#dateRange", {
 });
 
 
-// Toggle visibility based on checkbox
-/* const checkbox = document.getElementById("isDateRange");
-checkbox.addEventListener("change", function () {
-  const single = document.getElementById("single-date-container");
-  const range = document.getElementById("range-date-container");
-
-  if (checkbox.checked) {
-    single.style.display = "none";
-    range.style.display = "block";
-  } else {
-    single.style.display = "block";
-    range.style.display = "none";
-  }
-}); */
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    const checkbox = document.getElementById("isDateRange");
+    const checkbox = document.getElementById("is_date_range");
     const single = document.getElementById("single-date-container");
     const range = document.getElementById("range-date-container");
 
@@ -66,3 +38,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Code snippet adapted with the help of ChatGPT for Awesomplete setup and form validation.
+// Ensures users can only submit the form after selecting valid values from the list.
+
+const airportList = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
+
+const departureInput = document.getElementById("departure");
+const destinationInput = document.getElementById("destination");
+
+new Awesomplete(departureInput, {
+    list: airportList,
+    minChars: 1,
+    autoFirst: true
+});
+
+new Awesomplete(destinationInput, {
+    list: airportList,
+    minChars: 1,
+    autoFirst: true
+});
+
+document.getElementById("search-form").addEventListener("submit", function (e) {
+    const departure = departureInput.value.trim();
+    const destination = destinationInput.value.trim();
+
+    if (!airportList.includes(departure) || !airportList.includes(destination)) {
+        e.preventDefault();
+        alert("Please select both departure and destination from the list.");
+    }
+});

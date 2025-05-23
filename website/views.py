@@ -20,9 +20,23 @@ def index():
 @views.route("/search", methods=["GET", "POST"])
 @login_required
 def search_flights():
+    if request.method == "POST":
+        departure = request.form.get("departure")
+        destination = request.form.get("destination")
+        only_direct_flights = request.form.get("only_direct")
+        departure_date = request.form.get("departure_date")
+        departure_range = request.form.get("departure_range")
+        
+
     return render_template("search.html")
 
 @views.route("/account", methods=["GET", "POST"])
 @login_required
 def user_account():
     return render_template("account.html")
+
+
+@views.route("/results", methods=["GET", "POST"])
+@login_required
+def results():
+    return render_template("results.html")

@@ -23,26 +23,29 @@
         <div class="row gx-2 align-items-center mb-3">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" id="onlyDirectFlights" name="only_direct">
-                    <label class="form-check-label" for="onlyDirectFlights">Only Direct Flights</label>
+                    <input class="form-check-input" type="checkbox" value="true" id="only_direct" name="only_direct">
+                    <label class="form-check-label" for="only_direct">Only Direct Flights</label>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="isDateRange">
-                    <label class="form-check-label" for="isDateRange">Track Date Range</label>
+                    <input class="form-check-input" type="checkbox" value="false" id="is_date_range">
+                    <label class="form-check-label" for="is_date_range">Track Date Range</label>
                 </div>
             </div>
             <div class="col-md-3" id="single-date-container">
-                <input type="text" class="form-control" id="departureDate" placeholder="Departure Day">
+                <input type="text" class="form-control" id="departure_date" placeholder="Departure Day">
             </div>
             <div class="col-md-3 d-none" id="range-date-container">
-                <input type="text" class="form-control" id="departureRange" placeholder="Select Date Range">
+                <input type="text" class="form-control" id="departure_range" placeholder="Select Date Range">
             </div>
-        </div>
+        </div>aw
 
         <div class="w-100 h-200"></div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <!--<button type="submit" class="btn btn-primary">Search</button>-->
+        <a href="{{ url_for('views.results') }}" class="btn btn-primary">
+            Search
+        </a>
     </div>
 </form>
 
