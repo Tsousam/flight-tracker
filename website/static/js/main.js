@@ -10,7 +10,7 @@ flatpickr("#departure_date", {
 });
 
 // Datepicker for Date Range
-flatpickr("#is_date_range", {
+flatpickr("#departure_range", {
   mode: "range",
   dateFormat: "d/m/Y",
   altFormat: "l, d/m/Y",
@@ -40,8 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Code snippet adapted with the help of ChatGPT for Awesomplete setup and form validation.
 // Ensures users can only submit the form after selecting valid values from the list.
-
-const airportList = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
+const airportList = JSON.parse(document.getElementById("airport-list").textContent);
 
 const departureInput = document.getElementById("departure");
 const destinationInput = document.getElementById("destination");
@@ -62,8 +61,12 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
     const departure = departureInput.value.trim();
     const destination = destinationInput.value.trim();
 
-    if (!airportList.includes(departure) || !airportList.includes(destination)) {
+    if (!airportList.includes(departure)) {
         e.preventDefault();
-        alert("Please select both departure and destination from the list.");
+        alert("Please select a valid Airport for Departure.");
+    }
+    if (!airportList.includes(destination)) {
+        e.preventDefault();
+        alert("Please select a valid Airport for Destination.");
     }
 });

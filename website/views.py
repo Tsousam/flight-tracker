@@ -26,9 +26,12 @@ def search_flights():
         only_direct_flights = request.form.get("only_direct")
         departure_date = request.form.get("departure_date")
         departure_range = request.form.get("departure_range")
-        
 
-    return render_template("search.html")
+
+        
+    airport_list = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+
+    return render_template("search.html", airport_list=airport_list)
 
 @views.route("/account", methods=["GET", "POST"])
 @login_required
