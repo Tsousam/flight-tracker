@@ -44,6 +44,8 @@ const airportList = JSON.parse(document.getElementById("airport-list").textConte
 
 const departureInput = document.getElementById("departure");
 const destinationInput = document.getElementById("destination");
+const departureDateInput = document.getElementById("departure_date")
+const departureDateRangeInput = document.getElementById("departure-range")
 
 new Awesomplete(departureInput, {
     list: airportList,
@@ -57,9 +59,22 @@ new Awesomplete(destinationInput, {
     autoFirst: true
 });
 
+function showError(msg) {
+  const el = document.getElementById("date-error");
+  el.classList.remove("d-none");
+  el.textContent = msg;
+}
+
+
 document.getElementById("search-form").addEventListener("submit", function (e) {
     const departure = departureInput.value.trim();
     const destination = destinationInput.value.trim();
+    const departureDate = departureDateInput.value.trim();
+    const departureDateRange = flatpickrInstance.parseDate(departureDate, "d/m/Y");
+    const today = new Date();
+    const maxDate = new Date();
+    const range = departureDateRange.value.split(" to ");
+    
 
     if (!airportList.includes(departure)) {
         e.preventDefault();
@@ -67,6 +82,60 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
     }
     if (!airportList.includes(destination)) {
         e.preventDefault();
-        alert("Please select a valid Airport for Destination.");
+        showError("Please select a valid Airport for Destination.");
+    }
+    if (departure === destination) {
+        alert("Departure and destination cannot be the same.");
+        return false;
+    }
+    if (!departureDate) {
+        showError("Please select a date.");
+        return false;
+    }
+    if (departureDateRange < today) {
+        showError("Selected date cannot be in the past.");
+        return false;
+    }
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    if (departureDateRange > maxDate) {
+        showError("Selected date must be within 1 year.");
+        return false;
+    }
+    if (range.length !== 2) {
+        showError("Please select both a start and an end date.");
+        return false;
     }
 });
+
+
+const awesompleteDeparture = new Awesomplete(departureInput, {
+    list: airportList,
+    maxItems: 5,
+    minChars: 0,
+    autoFirst: true
+});
+
+const awesompleteDestination = new Awesomplete(destinationInput, {
+    list: airportList,
+    maxItems: 5,
+    minChars: 0,
+    autoFirst: true
+});
+
+
+departureInput.addEventListener("focus", function () {
+    awesompleteDeparture.evaluate();
+});
+
+destinationInput.addEventListener("focus", function () {
+    awesompleteDestination.evaluate();
+});
+
+
+function closeDropdownOnSelect() {
+    this.blur();
+}
+
+departureInput.addEventListener("awesomplete-selectcomplete", closeDropdownOnSelect);
+destinationInput.addEventListener("awesomplete-selectcomplete", closeDropdownOnSelect);
+

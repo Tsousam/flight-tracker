@@ -29,7 +29,8 @@ def search_flights():
 
 
         
-    airport_list = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+    airport_list = ["Lisbon (LIS)", "Porto (OPO)", "Madrid (MAD)", "Barcelona (BCN)", "Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)", "Rome (FCO)", "New York (JFK)"];
+
 
     return render_template("search.html", airport_list=airport_list)
 

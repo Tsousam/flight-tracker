@@ -36,10 +36,20 @@
 	border-radius: .3em;
 	margin: .2em 0 0;
 	background: hsla(0,0%,100%,.9);
-	background: linear-gradient(to bottom right, white, hsla(0,0%,100%,.8));
+	background: linear-gradient(to bottom right, white, #f0f0f0);
 	border: 1px solid rgba(0,0,0,.3);
 	box-shadow: .05em .2em .6em rgba(0,0,0,.2);
 	text-shadow: none;
+}
+
+.awesomplete li {
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+}
+
+.awesomplete li mark {
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
 }
 
 @supports (transform: scale(0)) {
