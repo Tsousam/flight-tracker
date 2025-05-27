@@ -14,10 +14,10 @@
     <div id="form-container">
         <div class="row gx-2 align-items-center mb-3">
             <div class="col-md-3">
-                <input id="departure" class="form-control" placeholder="Departure" />
+                <input id="departure" name="departure" class="form-control" placeholder="Departure" />
             </div>
             <div class="col-md-3">
-                <input id="destination" class="form-control" placeholder="Destination" />
+                <input id="destination" name="destination" class="form-control" placeholder="Destination" />
             </div>
         </div>
         <div class="row gx-2 align-items-center mb-3">
@@ -35,21 +35,17 @@
             </div>
             <div class="col-md-3" id="single-date-container">
                 <small id="date-error" class="text-danger d-none"></small>
-                <input type="text" class="form-control" id="departure_date" placeholder="Departure Day">
+                <input type="text" class="form-control" id="departure_date" name="departure_date" placeholder="Departure Day">
             </div>
             <div class="col-md-3 d-none" id="range-date-container">
                 <small id="date-error" class="text-danger d-none"></small>
-                <input type="text" class="form-control" id="departure_range" placeholder="Select Date Range">
+                <input type="text" class="form-control" id="departure_range" name="departure_range" placeholder="Select Date Range">
             </div>
         </div>
 
         <div class="w-100 h-200"></div>
         <!--<button type="submit" class="btn btn-primary">Search</button>-->
-        <a href="{{ url_for('views.results') }}">
-            <button type="submit" class="btn btn-primary">
-                Search
-            </button>
-        </a>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
 

@@ -78,14 +78,14 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
 
     if (!airportList.includes(departure)) {
         e.preventDefault();
-        alert("Please select a valid Airport for Departure.");
+        alert("JS: Please select a valid Airport for Departure.");
     }
     if (!airportList.includes(destination)) {
         e.preventDefault();
         showError("Please select a valid Airport for Destination.");
     }
     if (departure === destination) {
-        alert("Departure and destination cannot be the same.");
+        alert("Departure and Destination cannot be the same.");
         return false;
     }
     if (!departureDate) {
