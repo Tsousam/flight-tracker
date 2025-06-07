@@ -1,7 +1,8 @@
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.models import User, TrackedFlights, db
-from datetime import datetime, timedelta
+
+
 
 views = Blueprint("views", __name__)
 
@@ -18,9 +19,37 @@ def index():
     
     return render_template("index.html", flights=user_flights)
 
+@views.route("/results")
+@login_required
+def results():
+    from amadeus import ResponseError
+    from services.amadeus_client import amadeus
+
+    departure = request.args.get("departure")
+    destination = request.args.get("destination")
+    departure_date = request.args.get("departure_date")
+
+    flights=[]
+    try:
+        response = amadeus.shopping.flight_offers_search.get(
+            originLocationCode="LIS",
+            destinationLocationCode="FCO",
+            departureDate="2025-06-05",
+            adults=1)
+        flights = response.data
+    except ResponseError as error:
+        print(error)
+
+    return render_template("results.html", flights=flights)
+
+
+
 @views.route("/search", methods=["GET", "POST"])
 @login_required
 def search_flights():
+    from datetime import datetime, timedelta
+    from utils.flight_utils import extract_airport_shorten
+
     airport_list = ["Lisbon (LIS)", "Porto (OPO)", "Madrid (MAD)", "Barcelona (BCN)",
                     "Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)",
                     "Rome (FCO)", "New York (JFK)"]
@@ -55,7 +84,7 @@ def search_flights():
 
         if departure_date:
             try:
-                parsed_departure = datetime.strptime(departure_date, "%d/%m/%Y").date()
+                parsed_departure = datetime.strptime(departure_date, "%Y/%m/%d").date()
             except ValueError:
                 flash("Invalid Departure Date format.", "error")
                 return redirect(request.url)
@@ -73,8 +102,8 @@ def search_flights():
                 split_dates = departure_range.split(" to ")
                 if len(split_dates) != 2:
                     raise ValueError("Invalid range format.")
-                user_min_date = datetime.strptime(split_dates[0], "%d/%m/%Y").date()
-                user_max_date = datetime.strptime(split_dates[1], "%d/%m/%Y").date()
+                user_min_date = datetime.strptime(split_dates[0], "%Y/%m/%d").date()
+                user_max_date = datetime.strptime(split_dates[1], "%Y/%m/%d").date()
 
                 if user_min_date < today or user_max_date < today:
                     flash("Selected range cannot include past dates.", "error")
@@ -93,8 +122,13 @@ def search_flights():
                 flash("Please select both a Start and an End Date in the correct format.", "error")
                 return redirect(request.url)
             
+        departure_shorten = extract_airport_shorten(departure)
+        destination_shorten = extract_airport_shorten(destination)
+        departure_date= departure_date.replace("/", "-")
+            
         flash("Searching for your future flight.", "success")
-        return redirect(url_for("views.results"))
+        return redirect(url_for("views.results", departure=departure_shorten,
+                        destination=destination_shorten, departure_date=departure_date))
 
     return render_template("search.html", airport_list=airport_list)
 
@@ -102,9 +136,3 @@ def search_flights():
 @login_required
 def user_account():
     return render_template("account.html")
-
-
-@views.route("/results", methods=["GET", "POST"])
-@login_required
-def results():
-    return render_template("results.html")
