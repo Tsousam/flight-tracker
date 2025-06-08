@@ -19,14 +19,14 @@
             <div class="col-md-3">
                 <input id="destination" name="destination" class="form-control" placeholder="Destination" />
             </div>
-        </div>
-        <div class="row gx-2 align-items-center mb-3">
             <div class="col-md-3">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="true" id="only_direct" name="only_direct">
                     <label class="form-check-label" for="only_direct">Only Direct Flights</label>
                 </div>
             </div>
+        </div>
+        <div class="row gx-2 align-items-center mb-3">
             <div class="col-md-3">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="false" id="is_date_range" name="is_date_range">
@@ -37,19 +37,27 @@
                 <small id="date-error" class="text-danger d-none"></small>
                 <input type="text" class="form-control" id="departure_date" name="departure_date" placeholder="Departure Day">
             </div>
-            <div class="col-md-3 d-none" id="range-date-container">
+            <div class="col-md-3" id="range-date-container">
                 <small id="date-error" class="text-danger d-none"></small>
                 <input type="text" class="form-control" id="departure_range" name="departure_range" placeholder="Select Date Range">
             </div>
         </div>
-
-        <div class="w-100 h-200"></div>
-        <!--<button type="submit" class="btn btn-primary">Search</button>-->
+        <div class="row gx-2 align-items-center sm-2">
+            <div class="col-md-3">
+                <label class="form-check-label" for="adults" >Adults</label>
+                <div class="input-group">
+                    <div class="input-group" style="max-width: 100px;">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="decrease-adults">−</button>
+                        <input type="text" id="adults" name="adults" class="form-control text-center" value="1" maxlength="2" size="2" readonly />
+                        <button type="button" class="btn btn-outline-secondary btn-sm" id="increase-adults">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
-
-    </form>
 {% endblock %}
 
 {% block scripts %}

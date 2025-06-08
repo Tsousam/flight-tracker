@@ -34,7 +34,9 @@ def results():
         response = amadeus.shopping.flight_offers_search.get(
             originLocationCode="LIS",
             destinationLocationCode="FCO",
-            departureDate="2025-06-05",
+            departureDate="2025-06-10",
+            # If round trip
+            #returnDate="2025-06-17", 
             adults=1)
         flights = response.data
     except ResponseError as error:

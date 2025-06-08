@@ -5,10 +5,41 @@
 {% endblock %}
 
 {% block main %}
-    <head>
-    </head>
-    <body>
-        <h1>Template</h1>
-        <p>This is a blank template for a web page.</p>
-    </body>
+    <h1>Flight Results</h1>
+
+    {% if flights %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Airline</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Price</th>
+                    <th>One Way</th>
+                    <th>Available Seats</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                    {% set departure_date_time_split = flight['itineraries'][0]['segments'][0]['departure']['at'].split('T') %}
+                    {% set arrival_date_time_split = flight['itineraries'][0]['segments'][0]['arrival']['at'].split('T') %}
+                    <tr>
+                        <td>{{ flight['validatingAirlineCodes'][0] }}</td>
+                        <td>{{ flight['itineraries'][0]['segments'][0]['departure']['iataCode'] }}</td>
+                        <td>{{ flight['itineraries'][0]['segments'][-1]['arrival']['iataCode'] }}</td>
+                        <td>{{ departure_date_time_split[0] }}</td>
+                        <td>{{ departure_date_time_split[1] }} - 
+                            {{ arrival_date_time_split[1] }}</td>
+                        <td>{{ flight['price']['total'] }} {{ flight['price']['currency'] }}</td>
+                        <td>{{ flight['oneWay'] }}</td>
+                        <td>{{ flight['numberOfBookableSeats'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No flights found for your search.</p>
+    {% endif %}
 {% endblock %}
