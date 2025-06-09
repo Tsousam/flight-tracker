@@ -6,30 +6,39 @@
 
 {% block head %}
     <link rel="stylesheet" href="/static/css/awesomplete.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.4.0/air-datepicker.css">
 {% endblock %}
 
 {% block main %}
 <form action="/search" method="post" id="search-form">
     <div id="form-container">
-        <div class="row gx-2 align-items-center mb-3">
+        <div class="row gx-4 align-items-center mb-4">
+             <div class="col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="true" id="only_direct" name="only_direct">
+                    <label class="form-check-label" for="only_direct">Only Direct Flights</label>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <label class="form-check-label me-3 mb-0" for="adults" >Adults</label>
+                <div class="input-group" style="max-width: 100px;">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="decrease-adults">−</button>
+                    <input type="text" id="adults" name="adults" class="form-control text-center" value="1" maxlength="2" size="2" readonly />
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="increase-adults">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="row gx-4 align-items-center mb-4">
             <div class="col-md-3">
                 <input id="departure" name="departure" class="form-control" placeholder="Departure" />
             </div>
             <div class="col-md-3">
                 <input id="destination" name="destination" class="form-control" placeholder="Destination" />
             </div>
-            <div class="col-md-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="true" id="only_direct" name="only_direct">
-                    <label class="form-check-label" for="only_direct">Only Direct Flights</label>
-                </div>
-            </div>
         </div>
-        <div class="row gx-2 align-items-center mb-3">
+        <div class="row gx-4 align-items-center mb-4">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="false" id="is_date_range" name="is_date_range">
+                    <input class="form-check-input" type="checkbox" id="is_date_range" name="is_date_range">
                     <label class="form-check-label" for="is_date_range">Track Date Range</label>
                 </div>
             </div>
@@ -37,25 +46,12 @@
                 <small id="date-error" class="text-danger d-none"></small>
                 <input type="text" class="form-control" id="departure_date" name="departure_date" placeholder="Departure Day">
             </div>
-            <div class="col-md-3" id="range-date-container">
-                <small id="date-error" class="text-danger d-none"></small>
+            <div class="col-md-5" id="range-date-container">
                 <input type="text" class="form-control" id="departure_range" name="departure_range" placeholder="Select Date Range">
             </div>
         </div>
-        <div class="row gx-2 align-items-center sm-2">
-            <div class="col-md-3">
-                <label class="form-check-label" for="adults" >Adults</label>
-                <div class="input-group">
-                    <div class="input-group" style="max-width: 100px;">
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="decrease-adults">−</button>
-                        <input type="text" id="adults" name="adults" class="form-control text-center" value="1" maxlength="2" size="2" readonly />
-                        <button type="button" class="btn btn-outline-secondary btn-sm" id="increase-adults">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" style="width: 175px;">Submit</button>
     </div>
 </form>
 {% endblock %}
@@ -64,7 +60,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/rangePlugin.js"></script>
-
   <script src="/static/js/awesomplete.js"></script>
   <script id="airport-list" type="application/json">{{ airport_list | tojson | safe }}</script>
   <script src="/static/js/main.js" defer></script>

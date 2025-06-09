@@ -1,11 +1,10 @@
 // Datepicker for Departure Date
 flatpickr("#departure_date", {
-  dateFormat: "Y/m/d",
-  altFormat: "l, d/m/Y",
+  dateFormat: "d/m/Y",
+  altFormat: "D d M",
   minDate: new Date(), 
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
   locale: "en",
-  autoClose: true,
   altInput: true
 });
 
@@ -13,11 +12,10 @@ flatpickr("#departure_date", {
 flatpickr("#departure_range", {
   mode: "range",
   dateFormat: "d/m/Y",
-  altFormat: "l, d/m/Y",
+  altFormat: "D d M",
   minDate: new Date(), 
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
   locale: "en",
-  autoClose: true,
   altInput: true
 });
 
@@ -26,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.getElementById("is_date_range");
     const single = document.getElementById("single-date-container");
     const range = document.getElementById("range-date-container");
+
+    range.classList.add("d-none");
 
     checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
@@ -46,18 +46,6 @@ const departureInput = document.getElementById("departure");
 const destinationInput = document.getElementById("destination");
 const departureDateInput = document.getElementById("departure_date")
 const departureDateRangeInput = document.getElementById("departure-range")
-
-new Awesomplete(departureInput, {
-    list: airportList,
-    minChars: 1,
-    autoFirst: true
-});
-
-new Awesomplete(destinationInput, {
-    list: airportList,
-    minChars: 1,
-    autoFirst: true
-});
 
 function showError(msg) {
   const el = document.getElementById("date-error");
@@ -138,4 +126,3 @@ function closeDropdownOnSelect() {
 
 departureInput.addEventListener("awesomplete-selectcomplete", closeDropdownOnSelect);
 destinationInput.addEventListener("awesomplete-selectcomplete", closeDropdownOnSelect);
-
