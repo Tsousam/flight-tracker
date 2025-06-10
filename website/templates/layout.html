@@ -56,11 +56,11 @@
             {% block main %}{% endblock %}
         </main>
 
-        <footer class="mb-5">
-            <form action="https://validator.w3.org/check" class="text-center" enctype="multipart/form-data" method="post" target="_blank">
+        <!-- <footer class="mb-5"> -->
+<!--             <form action="https://validator.w3.org/check" class="text-center" enctype="multipart/form-data" method="post" target="_blank">
                 <input name="doctype" type="hidden" value="HTML5">
                 <input name="fragment" type="hidden">
-                <input alt="Validate" src="/static/I_heart_validator.png" type="image"> <!-- https://validator.w3.org/ -->
+                <input alt="Validate" src="/static/I_heart_validator.png" type="image">
             </form>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
@@ -73,8 +73,8 @@
                     '>\n' + document.documentElement.outerHTML;
                     document.querySelector('form[action="https://validator.w3.org/check"] > input[name="fragment"]').value = html;
                 });
-            </script>
-        </footer>
+            </script> -->
+        <!-- </footer> -->
 
         {% block scripts %}{% endblock %}
 
