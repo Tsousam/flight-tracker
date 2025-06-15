@@ -16,25 +16,22 @@
                     <th>To</th>
                     <th>Date</th>
                     <th>Hours</th>
+                    <th>Duration</th>
                     <th>Price</th>
-                    <th>One Way</th>
                     <th>Available Seats</th>
                 </tr>
             </thead>
             <tbody>
-                {% for flight in flights %}
-                    {% set departure_date_time_split = flight['itineraries'][0]['segments'][0]['departure']['at'].split('T') %}
-                    {% set arrival_date_time_split = flight['itineraries'][0]['segments'][0]['arrival']['at'].split('T') %}
+               {% for flight in flights %}
                     <tr>
-                        <td>{{ flight['validatingAirlineCodes'][0] }}</td>
-                        <td>{{ flight['itineraries'][0]['segments'][0]['departure']['iataCode'] }}</td>
-                        <td>{{ flight['itineraries'][0]['segments'][-1]['arrival']['iataCode'] }}</td>
-                        <td>{{ departure_date_time_split[0] }}</td>
-                        <td>{{ departure_date_time_split[1] }} - 
-                            {{ arrival_date_time_split[1] }}</td>
-                        <td>{{ flight['price']['total'] }} {{ flight['price']['currency'] }}</td>
-                        <td>{{ flight['oneWay'] }}</td>
-                        <td>{{ flight['numberOfBookableSeats'] }}</td>
+                        <td>{{ flight.airline }}</td>
+                        <td>{{ flight.departure }}</td>
+                        <td>{{ flight.destination }}</td>
+                        <td>{{ flight.departure_date }}</td>
+                        <td>{{ flight.departure_arrival_time }}</td>
+                        <td>{{ flight.duration }}</td>
+                        <td>{{ flight.price }}</td>
+                        <td>{{ flight.bookable_seats }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

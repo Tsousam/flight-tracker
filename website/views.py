@@ -1,6 +1,7 @@
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.models import User, TrackedFlights, db
+from utils.flight_utils import arrange_flights_data
 
 
 
@@ -34,15 +35,19 @@ def results():
         response = amadeus.shopping.flight_offers_search.get(
             originLocationCode="LIS",
             destinationLocationCode="FCO",
-            departureDate="2025-06-10",
+            departureDate="2025-06-17",
             # If round trip
             #returnDate="2025-06-17", 
-            adults=1)
-        flights = response.data
+            adults=1,
+            max=20)
+
+        arranged_flights = arrange_flights_data(response.data)
+        print(arranged_flights)
     except ResponseError as error:
         print(error)
+        print(arranged_flights)
 
-    return render_template("results.html", flights=flights)
+    return render_template("results.html", flights=arranged_flights)
 
 
 
@@ -128,7 +133,7 @@ def search_flights():
         destination_shorten = extract_airport_shorten(destination)
         departure_date= departure_date.replace("/", "-")
             
-        flash("Searching for your future flight.", "success")
+        #flash("Searching for your future flight.", "success")
         return redirect(url_for("views.results", departure=departure_shorten,
                         destination=destination_shorten, departure_date=departure_date))
 

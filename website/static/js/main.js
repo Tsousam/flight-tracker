@@ -1,6 +1,6 @@
 // Datepicker for Departure Date
 flatpickr("#departure_date", {
-  dateFormat: "d/m/Y",
+  dateFormat: "Y/m/d",
   altFormat: "D d M",
   minDate: new Date(), 
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
@@ -11,7 +11,7 @@ flatpickr("#departure_date", {
 // Datepicker for Date Range
 flatpickr("#departure_range", {
   mode: "range",
-  dateFormat: "d/m/Y",
+  dateFormat: "Y/m/d",
   altFormat: "D d M",
   minDate: new Date(), 
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
@@ -66,7 +66,7 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
 
     if (!airportList.includes(departure)) {
         e.preventDefault();
-        alert("JS: Please select a valid Airport for Departure.");
+        alert("Please select a valid Airport for Departure.");
     }
     if (!airportList.includes(destination)) {
         e.preventDefault();
