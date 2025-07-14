@@ -5,46 +5,46 @@
 {% endblock %}
 
 {% block main %}
-    <div class="page-container">
-        {% if flights|length == 0 %}
-            <div class="image-background-container"></div>
-            <div class="info-container">
-                <a href="{{ url_for('views.search_flights') }}" class="btn btn-primary btn-lg">
-                    Start Tracking Flights
-                </a>
-            </div>
-        {% else %}
-            <h2>Tracking</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Origin</th>
-                            <th>Destination</th>
-                            <th>Date</th>
-                            <th>Flexibility</th>
-                            <th>Weekdays</th>
-                            <th>Weekends</th>
-                            <th>Current Price</th>
-                            <th>Last checked</th>
-                            <th>Book It</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for flight in flights %}
-                        <tr>
-                            <td>{{ flight.origin }}</td>
-                            <td>{{ flight.destination }}</td>
-                            <td>{{ flight.departure_date }}</td>
-                            <td>{{ flight.flex_days }}</td>
-                            <td>{{ flight.weekdays }}</td>
-                            <td>{{ flight.weekends }}</td>
-                            <td>{{ flight.current_price }}</td>
-                            <td>{{ flight.last_checked }}</td>
-                            <td>{{ flight.booking_link }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-        {% endif %}
-    </div>
+    {% if flights|length == 0 %}
+        <div class="image-background-container"></div>
+        <div class="info-container">
+            <a href="{{ url_for('views.search_flights') }}" class="btn btn-primary btn-lg">
+                Start Tracking Flights
+            </a>
+        </div>
+    {% else %}
+        <h2>My Flights</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Airline</th>
+                        <th>Departure</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th>Hours</th>
+                        <th>Duration</th>
+                        <th>Price</th>
+                        <th>Available Seats</th>
+                        <th>Last Checked </th>
+                        <th>Book Flight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flights %}
+                    <tr>
+                        <td>{{ flight.airline }}</td>
+                        <td>{{ flight.departure }}</td>
+                        <td>{{ flight.destination }}</td>
+                        <td>{{ flight.departure_date }}</td>
+                        <td>{{ flight.departure_arrival_time }}</td>
+                        <td>{{ flight.duration }}</td>
+                        <td>{{ flight.price }}</td>
+                        <td>{{ flight.bookable_seats}}</td>
+                        <td>{{ flight.last_checked }}</td>
+                        <td><a href="{{ flight.url }}" target="_blank">Book It</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,130 @@
+{
+  "TP": {
+    "name": "TAP Air Portugal",
+    "url": "https://www.flytap.com/"
+  },
+  "UX": {
+    "name": "Air Europa",
+    "url": "https://www.aireuropa.com/"
+  },
+  "IB": {
+    "name": "Iberia",
+    "url": "https://www.iberia.com/"
+  },
+  "BA": {
+    "name": "British Airways",
+    "url": "https://www.britishairways.com/"
+  },
+  "AF": {
+    "name": "Air France",
+    "url": "https://www.airfrance.com/"
+  },
+  "KL": {
+    "name": "KLM Royal Dutch Airlines",
+    "url": "https://www.klm.com/"
+  },
+  "LH": {
+    "name": "Lufthansa",
+    "url": "https://www.lufthansa.com/"
+  },
+  "LX": {
+    "name": "SWISS International Air Lines",
+    "url": "https://www.swiss.com/"
+  },
+  "AZ": {
+    "name": "ITA Airways",
+    "url": "https://www.ita-airways.com/"
+  },
+  "SK": {
+    "name": "Scandinavian Airlines (SAS)",
+    "url": "https://www.flysas.com/"
+  },
+  "EI": {
+    "name": "Aer Lingus",
+    "url": "https://www.aerlingus.com/"
+  },
+  "SN": {
+    "name": "Brussels Airlines",
+    "url": "https://www.brusselsairlines.com/"
+  },
+  "OS": {
+    "name": "Austrian Airlines",
+    "url": "https://www.austrian.com/"
+  },
+  "FR": {
+    "name": "Ryanair",
+    "url": "https://www.ryanair.com/"
+  },
+  "U2": {
+    "name": "easyJet",
+    "url": "https://www.easyjet.com/"
+  },
+  "VY": {
+    "name": "Vueling",
+    "url": "https://www.vueling.com/"
+  },
+  "EW": {
+    "name": "Eurowings",
+    "url": "https://www.eurowings.com/"
+  },
+  "AA": {
+    "name": "American Airlines",
+    "url": "https://www.aa.com/"
+  },
+  "UA": {
+    "name": "United Airlines",
+    "url": "https://www.united.com/"
+  },
+  "DL": {
+    "name": "Delta Air Lines",
+    "url": "https://www.delta.com/"
+  },
+  "WN": {
+    "name": "Southwest Airlines",
+    "url": "https://www.southwest.com/"
+  },
+  "B6": {
+    "name": "JetBlue",
+    "url": "https://www.jetblue.com/"
+  },
+  "AS": {
+    "name": "Alaska Airlines",
+    "url": "https://www.alaskaair.com/"
+  },
+  "AC": {
+    "name": "Air Canada",
+    "url": "https://www.aircanada.com/"
+  },
+  "WS": {
+    "name": "WestJet",
+    "url": "https://www.westjet.com/"
+  },
+  "LA": {
+    "name": "LATAM Airlines",
+    "url": "https://www.latam.com/"
+  },
+  "AV": {
+    "name": "Avianca",
+    "url": "https://www.avianca.com/"
+  },
+  "AM": {
+    "name": "Aeromexico",
+    "url": "https://www.aeromexico.com/"
+  },
+  "CM": {
+    "name": "Copa Airlines",
+    "url": "https://www.copaair.com/"
+  },
+  "AT": {
+    "name": "Royal Air Maroc",
+    "url": "https://www.royalairmaroc.com/"
+  },
+  "A3": {
+    "name": "Aegean Airlines",
+    "url": "https://en.aegeanair.com/"
+  },
+  "DY": {
+    "name": "Norwegian Air Shuttle",
+    "url": "https://www.norwegian.com/"
+  }
+}

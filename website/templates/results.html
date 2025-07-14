@@ -12,19 +12,20 @@
             <thead>
                 <tr>
                     <th>Airline</th>
-                    <th>From</th>
-                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Destination</th>
                     <th>Date</th>
                     <th>Hours</th>
                     <th>Duration</th>
                     <th>Price</th>
                     <th>Available Seats</th>
+                    <th>Save Flight</th>
                 </tr>
             </thead>
             <tbody>
                {% for flight in flights %}
                     <tr>
-                        <td>{{ flight.airline }}</td>
+                        <td><a href="{{ flight.url }}" target="_blank">{{ flight.airline }}</a></td>
                         <td>{{ flight.departure }}</td>
                         <td>{{ flight.destination }}</td>
                         <td>{{ flight.departure_date }}</td>
@@ -32,6 +33,22 @@
                         <td>{{ flight.duration }}</td>
                         <td>{{ flight.price }}</td>
                         <td>{{ flight.bookable_seats }}</td>
+                        <td>
+                            <a href="{{ url_for('views.save_flight',
+                                        flight_id = flight.id,
+                                        url = flight.url,
+                                        airline = flight.airline,
+                                        departure = flight.departure,
+                                        destination = flight.destination,
+                                        departure_date = flight.departure_date,
+                                        departure_arrival_time = flight.departure_arrival_time,
+                                        duration = flight.duration,
+                                        price = flight.price,
+                                        seats = flight.bookable_seats
+                                        ) }}">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

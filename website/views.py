@@ -1,7 +1,7 @@
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.models import User, TrackedFlights, db
-from utils.flight_utils import arrange_flights_data
+from utils.flight_utils import arrange_flights_data, search_flight_offers
 
 
 
@@ -23,31 +23,77 @@ def index():
 @views.route("/results")
 @login_required
 def results():
-    from amadeus import ResponseError
-    from services.amadeus_client import amadeus
-
     departure = request.args.get("departure")
     destination = request.args.get("destination")
     departure_date = request.args.get("departure_date")
+    adults = 1
+    max_results =50
 
-    flights=[]
-    try:
-        response = amadeus.shopping.flight_offers_search.get(
-            originLocationCode="LIS",
-            destinationLocationCode="FCO",
-            departureDate="2025-06-17",
-            # If round trip
-            #returnDate="2025-06-17", 
-            adults=1,
-            max=20)
-
-        arranged_flights = arrange_flights_data(response.data)
-        print(arranged_flights)
-    except ResponseError as error:
-        print(error)
-        print(arranged_flights)
+    fetch_flights = search_flight_offers(departure, destination, departure_date, adults, max_results)
+    #print(fetch_flights)
+    arranged_flights = arrange_flights_data(fetch_flights)
+    #print(arranged_flights)
 
     return render_template("results.html", flights=arranged_flights)
+
+@views.route("/save-flight")
+@login_required
+def save_flight():
+    from datetime import datetime
+
+    flight_id = request.args.get('flight_id')
+    url = request.args.get('url')
+    airline = request.args.get('airline')
+    departure = request.args.get('departure')
+    destination = request.args.get('destination')
+    departure_date = datetime.strptime(request.args.get('departure_date'), "%Y-%m-%d").date()
+    departure_arrival_time = request.args.get('departure_arrival_time')
+    duration = request.args.get('duration')
+    price = request.args.get('price')
+    seats = request.args.get('seats')
+    #last_checked = 
+
+    print(flight_id)
+    print(url)
+    print(airline)
+    print(departure)
+    print(destination)
+    print(departure_date)
+    print(departure_arrival_time)
+    print(duration)
+    print(price)
+    print(seats)
+
+    if not flight_id or not airline or not departure or not destination:
+        flash("There was a problem saving your flight. Please try again later.", "error")
+        return redirect(url_for('views.index'))
+    
+
+    try:
+        new_flight = TrackedFlights(user_id = current_user.id,
+                                    flight_id = flight_id,
+                                    url = url,
+                                    airline = airline,
+                                    departure=departure,
+                                    destination=destination,
+                                    departure_date=departure_date,
+                                    departure_arrival_time = departure_arrival_time,
+                                    duration=duration,
+                                    price=price,
+                                    bookable_seats = seats,
+                                    last_checked = datetime.now()
+                                    )
+    
+        db.session.add(new_flight)
+        db.session.commit()
+        flash("Flight was saved.", "success")
+
+    except Exception as e:
+        db.session.rollback()
+        flash("An error has occurred while saving the flight.", "error")
+        print(e)
+
+    return redirect(url_for('views.index'))
 
 
 
@@ -138,6 +184,7 @@ def search_flights():
                         destination=destination_shorten, departure_date=departure_date))
 
     return render_template("search.html", airport_list=airport_list)
+
 
 @views.route("/account", methods=["GET", "POST"])
 @login_required
