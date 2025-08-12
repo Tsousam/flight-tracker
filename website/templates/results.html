@@ -6,15 +6,24 @@
 
 {% block main %}
     <h1>Flight Results</h1>
-
+    <br>
+    <br>
+    <div class="row gx-4 align-items-center mb-3 justify-content-md-center">
+        <div class="col text-end">
+            <h6>{{ departure }}</h6>
+        </div>
+        <div class="col text-start">
+            <h6>{{ destination }}</h6>
+        </div>
+    </div>
+    <div class="row gx-4 align-items-center mb-3 justify-content-center">
+        <p>{{ departure_date }}<p>
+    </div>
     {% if flights %}
         <table>
             <thead>
                 <tr>
                     <th>Airline</th>
-                    <th>Departure</th>
-                    <th>Destination</th>
-                    <th>Date</th>
                     <th>Hours</th>
                     <th>Duration</th>
                     <th>Price</th>
@@ -26,16 +35,12 @@
                {% for flight in flights %}
                     <tr>
                         <td><a href="{{ flight.url }}" target="_blank">{{ flight.airline }}</a></td>
-                        <td>{{ flight.departure }}</td>
-                        <td>{{ flight.destination }}</td>
-                        <td>{{ flight.departure_date }}</td>
                         <td>{{ flight.departure_arrival_time }}</td>
                         <td>{{ flight.duration }}</td>
                         <td>{{ flight.price }}</td>
                         <td>{{ flight.bookable_seats }}</td>
                         <td>
                             <a href="{{ url_for('views.save_flight',
-                                        flight_id = flight.id,
                                         url = flight.url,
                                         airline = flight.airline,
                                         departure = flight.departure,
@@ -53,6 +58,8 @@
                 {% endfor %}
             </tbody>
         </table>
+        <br>
+        <a href="{{ url_for('views.index') }}">Check My Flights</a>
     {% else %}
         <p>No flights found for your search.</p>
     {% endif %}

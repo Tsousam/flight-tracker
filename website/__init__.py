@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(views)
 
-    from website.models import db, User, TrackedFlights, PriceHistory
+    from website.models import db, User, TrackedFlights
 
     login_manager = LoginManager()
     login_manager.init_app(app)

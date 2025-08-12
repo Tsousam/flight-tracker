@@ -9,7 +9,7 @@ flatpickr("#departure_date", {
 });
 
 // Datepicker for Date Range
-flatpickr("#departure_range", {
+/* flatpickr("#departure_range", {
   mode: "range",
   dateFormat: "Y/m/d",
   altFormat: "D d M",
@@ -17,7 +17,7 @@ flatpickr("#departure_range", {
   maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
   locale: "en",
   altInput: true
-});
+}); */
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -37,6 +37,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// Code snippet adapted with the help of ChatGPT.
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("adults");
+    const increaseButton = document.getElementById("increase-adults");
+    const decreaseButton = document.getElementById("decrease-adults");
+
+    increaseButton.addEventListener("click", function () {
+      let currentValue = parseInt(input.value) || 0;
+      if (currentValue < 9) {
+        input.value = currentValue + 1;
+      }
+    });
+
+    decreaseButton.addEventListener("click", function () {
+      let currentValue = parseInt(input.value) || 0;
+      if (currentValue > 0) {
+        input.value = currentValue - 1;
+      }
+    });
+  });
 
 // Code snippet adapted with the help of ChatGPT for Awesomplete setup and form validation.
 // Ensures users can only submit the form after selecting valid values from the list.
@@ -99,14 +120,14 @@ document.getElementById("search-form").addEventListener("submit", function (e) {
 const awesompleteDeparture = new Awesomplete(departureInput, {
     list: airportList,
     maxItems: 5,
-    minChars: 0,
+    minChars: 1,
     autoFirst: true
 });
 
 const awesompleteDestination = new Awesomplete(destinationInput, {
     list: airportList,
     maxItems: 5,
-    minChars: 0,
+    minChars: 1,
     autoFirst: true
 });
 

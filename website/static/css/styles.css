@@ -51,6 +51,7 @@ tbody tr:nth-of-type(odd) {
     background-image: url("/static/images/airplane-wing-sky.jpg");
     background-size: cover;
     background-position: center;
+    display: flex;
     width: 40%;
     height: 83vh;
 }
@@ -66,6 +67,7 @@ tbody tr:nth-of-type(odd) {
 
 #search-form {
     width: 100%;
+    margin-bottom: 200px;
 }
 
 #form-container {
@@ -81,6 +83,10 @@ tbody tr:nth-of-type(odd) {
     display: flex;
 	position: relative;
 	height: 83vh;
+}
+
+.results-page {
+    width: 70%;
 }
 
 .alert {
@@ -103,11 +109,12 @@ tbody tr:nth-of-type(odd) {
     border: 1px solid #c3e6cb;
 }
 
+.icon-buttons {
+    color: #007bff;
+}
+
 .info {
     background-color: #d1ecf1;
     color: #0c5460;
     border: 1px solid #bee5eb;
 }
-
-
-

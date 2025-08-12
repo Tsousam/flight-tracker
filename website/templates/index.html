@@ -6,14 +6,19 @@
 
 {% block main %}
     {% if flights|length == 0 %}
+    <div class="page-container">
         <div class="image-background-container"></div>
         <div class="info-container">
             <a href="{{ url_for('views.search_flights') }}" class="btn btn-primary btn-lg">
                 Start Tracking Flights
             </a>
         </div>
+    </div>
     {% else %}
-        <h2>My Flights</h2>
+        <h1>My Flights</h1>
+        <br>
+        <br>
+        <a href="{{ url_for('views.saved_results') }}">Check Last Results</a>
             <table>
                 <thead>
                     <tr>
@@ -25,14 +30,15 @@
                         <th>Duration</th>
                         <th>Price</th>
                         <th>Available Seats</th>
-                        <th>Last Checked </th>
-                        <th>Book Flight</th>
+                        <th>Checked At </th>
+                        <!--<th>Book Flight</th>-->
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for flight in flights %}
                     <tr>
-                        <td>{{ flight.airline }}</td>
+                        <td><a href="{{ flight.url }}" target="_blank">{{ flight.airline }}</a></td>
                         <td>{{ flight.departure }}</td>
                         <td>{{ flight.destination }}</td>
                         <td>{{ flight.departure_date }}</td>
@@ -40,8 +46,19 @@
                         <td>{{ flight.duration }}</td>
                         <td>{{ flight.price }}</td>
                         <td>{{ flight.bookable_seats}}</td>
-                        <td>{{ flight.last_checked }}</td>
-                        <td><a href="{{ flight.url }}" target="_blank">Book It</a></td>
+                        <td>{{ flight.last_checked.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <!--<td><a href="{{ flight.url }}" target="_blank">Book It</a></td> -->
+                        <td>
+                            <form action="{{ url_for('views.delete_flight') }}" method="POST">
+                                <input type="hidden" name="departure" value="{{ flight.departure }}">
+                                <input type="hidden" name="destination" value="{{ flight.destination }}">
+                                <input type="hidden" name="departure_date" value="{{ flight.departure_date }}">
+                                <input type="hidden" name="departure_arrival_time" value="{{ flight.departure_arrival_time }}">
+                                <button type="submit" title="Delete flight" class="icon-buttons" style="background:none; border:none;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

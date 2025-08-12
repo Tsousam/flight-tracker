@@ -1,0 +1,162 @@
+[
+  {
+    "code": "ATL",
+    "name": "Hartsfield-Jackson Atlanta International Airport"
+  },
+  {
+    "code": "LAX",
+    "name": "Los Angeles International Airport"
+  },
+  {
+    "code": "ORD",
+    "name": "O'Hare International Airport (Chicago)"
+  },
+  {
+    "code": "DFW",
+    "name": "Dallas/Fort Worth International Airport"
+  },
+  {
+    "code": "DEN",
+    "name": "Denver International Airport"
+  },
+  {
+    "code": "JFK",
+    "name": "John F. Kennedy International Airport (New York)"
+  },
+  {
+    "code": "SFO",
+    "name": "San Francisco International Airport"
+  },
+  {
+    "code": "SEA",
+    "name": "Seattle-Tacoma International Airport"
+  },
+  {
+    "code": "LAS",
+    "name": "Harry Reid International Airport (Las Vegas)"
+  },
+  {
+    "code": "MIA",
+    "name": "Miami International Airport"
+  },
+  {
+    "code": "BOS",
+    "name": "Logan International Airport (Boston)"
+  },
+  {
+    "code": "PHX",
+    "name": "Phoenix Sky Harbor International Airport"
+  },
+  {
+    "code": "IAH",
+    "name": "George Bush Intercontinental Airport (Houston)"
+  },
+  {
+    "code": "MSP",
+    "name": "Minneapolis-Saint Paul International Airport"
+  },
+  {
+    "code": "DTW",
+    "name": "Detroit Metropolitan Airport"
+  },
+  {
+    "code": "CLT",
+    "name": "Charlotte Douglas International Airport"
+  },
+  {
+    "code": "PHL",
+    "name": "Philadelphia International Airport"
+  },
+  {
+    "code": "LHR",
+    "name": "London Heathrow Airport"
+  },
+  {
+    "code": "LGW",
+    "name": "London Gatwick Airport"
+  },
+  {
+    "code": "CDG",
+    "name": "Charles de Gaulle Airport (Paris)"
+  },
+  {
+    "code": "ORY",
+    "name": "Orly Airport (Paris)"
+  },
+  {
+    "code": "FRA",
+    "name": "Frankfurt am Main Airport"
+  },
+  {
+    "code": "MUC",
+    "name": "Munich Airport"
+  },
+  {
+    "code": "AMS",
+    "name": "Amsterdam Schiphol Airport"
+  },
+  {
+    "code": "MAD",
+    "name": "Adolfo Suárez Madrid-Barajas Airport (Madrid)"
+  },
+  {
+    "code": "BCN",
+    "name": "Barcelona-El Prat Airport"
+  },
+  {
+    "code": "LIS",
+    "name": "Humberto Delgado Airport (Lisbon)"
+  },
+  {
+    "code": "OPO",
+    "name": "Francisco Sá Carneiro Airport (Porto)"
+  },
+  {
+    "code": "BRU",
+    "name": "Brussels Airport"
+  },
+  {
+    "code": "VIE",
+    "name": "Vienna International Airport"
+  },
+  {
+    "code": "ZRH",
+    "name": "Zurich Airport"
+  },
+  {
+    "code": "CPH",
+    "name": "Copenhagen Airport"
+  },
+  {
+    "code": "OSL",
+    "name": "Oslo Gardermoen Airport"
+  },
+  {
+    "code": "ARN",
+    "name": "Stockholm Arlanda Airport"
+  },
+  {
+    "code": "DUB",
+    "name": "Dublin Airport"
+  },
+  {
+    "code": "FCO",
+    "name": "Leonardo da Vinci-Fiumicino Airport (Rome)"
+  },
+  {
+    "code": "MXP",
+    "name": "Milan Malpensa Airport"
+  },
+  {
+    "code": "ATH",
+    "name": "Athens International Airport"
+  },
+  {
+    "code": "PRG",
+    "name": "Václav Havel Airport Prague"
+  },
+  {
+    "code": "WAW",
+    "name": "Warsaw Chopin Airport"
+  }
+]
