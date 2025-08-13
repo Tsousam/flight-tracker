@@ -41,14 +41,19 @@
                         <td>{{ flight.bookable_seats }}</td>
                         <td>
                             <a href="{{ url_for('views.save_flight',
+                                        carrier_code = flight.carrier_code,
+                                        flight_number = flight.flight_number,
                                         url = flight.url,
                                         airline = flight.airline,
+                                        departure_iata = flight.departure_iata,
+                                        destination_iata = flight.destination_iata,
                                         departure = flight.departure,
                                         destination = flight.destination,
                                         departure_date = flight.departure_date,
                                         departure_arrival_time = flight.departure_arrival_time,
                                         duration = flight.duration,
                                         price = flight.price,
+                                        adults = flight.adults,
                                         seats = flight.bookable_seats
                                         ) }}">
                                 <i class="fa-solid fa-bookmark"></i>

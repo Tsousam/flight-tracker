@@ -32,6 +32,7 @@
                         <th>Available Seats</th>
                         <th>Checked At </th>
                         <!--<th>Book Flight</th>-->
+                        <th>Update Flight</th>
                         <th>Remove</th>
                     </tr>
                 </thead>
@@ -48,12 +49,22 @@
                         <td>{{ flight.bookable_seats}}</td>
                         <td>{{ flight.last_checked.strftime('%Y-%m-%d %H:%M') }}</td>
                         <!--<td><a href="{{ flight.url }}" target="_blank">Book It</a></td> -->
+                        <td>                            
+                            <form action="{{ url_for('views.update_flight') }}" method="POST">
+                                <input type="hidden" name="carrier_code" value="{{ flight.carrier_code }}">
+                                <input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
+                                <input type="hidden" name="departure_iata" value="{{ flight.departure_iata }}">
+                                <input type="hidden" name="destination_iata" value="{{ flight.destination_iata }}">
+                                <input type="hidden" name="departure_date" value="{{ flight.departure_date }}">
+                                <input type="hidden" name="adults" value="{{ flight.adults }}">
+                                <button type="submit" title="Update flight" class="icon-buttons" style="background:none; border:none;">
+                                    <i class="fa-solid fa-sync"></i>
+                                </button>
+                            </form></td>
                         <td>
                             <form action="{{ url_for('views.delete_flight') }}" method="POST">
-                                <input type="hidden" name="departure" value="{{ flight.departure }}">
-                                <input type="hidden" name="destination" value="{{ flight.destination }}">
-                                <input type="hidden" name="departure_date" value="{{ flight.departure_date }}">
-                                <input type="hidden" name="departure_arrival_time" value="{{ flight.departure_arrival_time }}">
+                                <input type="hidden" name="carrier_code" value="{{ flight.carrier_code }}">
+                                <input type="hidden" name="flight_number" value="{{ flight.flight_number }}">
                                 <button type="submit" title="Delete flight" class="icon-buttons" style="background:none; border:none;">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>

@@ -1,44 +1,41 @@
+from datetime import date, datetime
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for, session
 from flask_login import login_required, current_user
-from website.models import User, TrackedFlights, asc, db
+from sqlalchemy import update
 from utils.flight_utils import arrange_flights_data, search_flight_offers
+from website.models import User, TrackedFlights, asc, db
 import json
-
 
 
 views = Blueprint("views", __name__)
 
+MAX_RESULTS = 25
+
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def index():
+
+
     if request.method == "POST":
 
         return render_template("index.html")
     
+    db.session.query(TrackedFlights).filter(TrackedFlights.departure_date < date.today()).delete()
+    db.session.commit()
+    
     user_flights = TrackedFlights.query.filter_by(user_id=current_user.id).order_by(asc(TrackedFlights.departure_date),asc(TrackedFlights.departure_arrival_time)).all()
-
-    print(user_flights)
     
     return render_template("index.html", flights=user_flights)
 
 @views.route("/delete-flight", methods=["POST"])
 @login_required
 def delete_flight():
-    departure = request.form.get("departure")
-    destination = request.form.get("destination")
-    departure_date = request.form.get("departure_date")
-    departure_arrival_time = request.form.get("departure_arrival_time")
+    carrier_code = request.form.get("carrier_code")
+    flight_number = request.form.get("flight_number")
 
-    print(departure)
-    print(destination)
-    print(departure_date)
-    print(departure_arrival_time)
-
-    flight = TrackedFlights.query.filter_by(user_id=current_user.id,
-                                            departure=departure,
-                                            destination=destination,
-                                            departure_date=departure_date,
-                                            departure_arrival_time=departure_arrival_time
+    flight = TrackedFlights.query.filter_by(user_id = current_user.id,
+                                            carrier_code = carrier_code,
+                                            flight_number = flight_number
                                             ).first()
 
     print(flight)
@@ -62,20 +59,17 @@ def results():
     departure_date = request.args.get("departure_date")
     #departure_data_formatted = request.args.get("departure_date_formatted")
     adults = request.args.get("adults")
-    max_results = request.args.get("max_results")
 
-    print("RESULTS FUNCTION")
-    print(departure_iata)
+    """ print(departure_iata)
     print(destination_iata)
     print(departure_date)
     print(adults)
-    print(max_results)
-    print("END RESULTS FUNCTION")
+    print(max_results) """
 
-    fetch_flights = search_flight_offers(departure_iata, destination_iata, departure_date, adults, max_results)
+    fetch_flights = search_flight_offers(departure_iata, destination_iata, departure_date, adults, MAX_RESULTS)
     #print(fetch_flights)
-    arranged_flights = arrange_flights_data(fetch_flights, departure, destination)
-    #print(arranged_flights)
+    arranged_flights = arrange_flights_data(fetch_flights, departure, destination, adults)
+    print(arranged_flights)
     
     session['departure'] = departure
     session['destination'] = destination
@@ -87,20 +81,22 @@ def results():
 @views.route("/save-flight")
 @login_required
 def save_flight():
-    from datetime import datetime
-
     url = request.args.get('url')
+    carrier_code = request.args.get('carrier_code')
+    flight_number = request.args.get('flight_number')
     airline = request.args.get('airline')
+    departure_iata = request.args.get('departure_iata')
+    destination_iata = request.args.get('destination_iata')
     departure = request.args.get('departure')
     destination = request.args.get('destination')
     departure_date = datetime.strptime(request.args.get('departure_date'), "%Y-%m-%d").date()
     departure_arrival_time = request.args.get('departure_arrival_time')
     duration = request.args.get('duration')
     price = request.args.get('price')
+    adults = request.args.get('adults')
     seats = request.args.get('seats')
-    #last_checked = 
 
-    print(url)
+    """ print(url)
     print(airline)
     print(departure)
     print(destination)
@@ -108,34 +104,37 @@ def save_flight():
     print(departure_arrival_time)
     print(duration)
     print(price)
-    print(seats)
+    print(seats) """
 
     if not airline or not departure or not destination:
         flash("There was a problem saving your flight. Please try again later.", "error")
         return redirect(url_for('views.saved_results'))
     
-    existing_flight = TrackedFlights.query.filter_by(user_id=current_user.id,
-                                                     departure=departure,
-                                                     destination=destination,
-                                                     departure_date=departure_date,
-                                                     departure_arrival_time=departure_arrival_time
+    existing_flight = TrackedFlights.query.filter_by(user_id = current_user.id,
+                                                     carrier_code = carrier_code,
+                                                     flight_number = flight_number,
                                                     ).first()
 
     if existing_flight:
-        flash("This flight is already saved.", "info")
+        flash("The flight was already saved.", "info")
         return redirect(url_for('views.saved_results'))
     
 
     try:
         new_flight = TrackedFlights(user_id = current_user.id,
+                                    carrier_code = carrier_code,
+                                    flight_number = flight_number,
                                     url = url,
                                     airline = airline,
-                                    departure=departure,
-                                    destination=destination,
-                                    departure_date=departure_date,
+                                    departure_iata = departure_iata,
+                                    destination_iata = destination_iata,
+                                    departure = departure,
+                                    destination = destination,
+                                    departure_date = departure_date,
                                     departure_arrival_time = departure_arrival_time,
-                                    duration=duration,
-                                    price=price,
+                                    duration = duration,
+                                    price = price,
+                                    adults = adults,
                                     bookable_seats = seats,
                                     last_checked = datetime.now()
                                     )
@@ -183,8 +182,6 @@ def search_flights():
     from datetime import datetime, timedelta
     from utils.flight_data import load_json
     from utils.flight_utils import extract_airport_shorten
-
-    MAX_RESULTS = 25
 
     #airport_list = ["Lisbon (LIS)", "Porto (OPO)", "Madrid (MAD)", "Barcelona (BCN)",
                     #"Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)",
@@ -276,15 +273,13 @@ def search_flights():
         destination_shorten = extract_airport_shorten(destination)
         departure_date= departure_date.replace("/", "-")
 
-        print("SEARCH FUNCTION")
-        print(departure_shorten)
+        """ print(departure_shorten)
         print(destination_shorten)
         print(departure)
         print(destination)
         print(departure_date)
         print(adults)
-        print(MAX_RESULTS)
-        print("END SEARCH FUNCTION")
+        print(MAX_RESULTS) """
             
         #flash("Searching for your future flight.", "success")
         return redirect(url_for("views.results", departure=departure, departure_iata=departure_shorten,
@@ -292,6 +287,79 @@ def search_flights():
                                 adults=adults, max_results=MAX_RESULTS))
 
     return render_template("search.html", airport_list=airport_list)
+
+
+@views.route("/update-flight", methods=["POST"])
+@login_required
+def update_flight():
+    carrier_code = request.form.get("carrier_code")
+    flight_number = request.form.get("flight_number")
+    departure_iata = request.form.get("departure_iata")
+    destination_iata = request.form.get("destination_iata")
+    departure_date = request.form.get("departure_date")
+    adults = request.form.get("adults")
+
+    print(carrier_code)
+    print(flight_number)
+    print(departure_iata)
+    print(destination_iata)
+    print(departure_date)
+    print(adults)
+
+
+    flight = TrackedFlights.query.filter(TrackedFlights.user_id == current_user.id,
+                                         TrackedFlights.carrier_code == carrier_code,
+                                         TrackedFlights.flight_number == flight_number,
+                                         TrackedFlights.departure_date < date.today()
+                                        ).first()
+
+    if flight:
+        flash("Flight was already departed.", "error")
+        return redirect(url_for('views.saved_results'))
+    
+
+    fetch_flights = search_flight_offers(departure_iata, destination_iata, departure_date, adults, MAX_RESULTS)
+
+
+    for flight in fetch_flights:
+        if carrier_code == flight["itineraries"][0]["segments"][0]["carrierCode"] and flight_number == flight["itineraries"][0]["segments"][0]["number"]:
+
+            ############################# Temporary fix #############################
+            if flight["price"]["currency"] == "EUR":
+                flight["price"]["currency"] = "€"
+
+            ############################# Temporary fix #############################
+            if flight["price"]["currency"] == "DOL":
+                flight["price"]["currency"] = "$"
+
+            if "." in flight["price"]["total"]:
+                flight_total = flight["price"]["total"].split(".")
+                flight["price"]["total"] = flight_total[0]
+
+            try:
+                update_flight = update(TrackedFlights).where(TrackedFlights.user_id == current_user.id,
+                                                            TrackedFlights.carrier_code == carrier_code,
+                                                            TrackedFlights.flight_number == flight_number
+                                                            ).values(
+                                                                price = f'{flight["price"]["total"]}{flight["price"]["currency"]}',
+                                                                bookable_seats = flight["numberOfBookableSeats"],
+                                                                last_checked = datetime.now()
+                                                            )
+                db.session.execute(update_flight)
+                db.session.commit()
+            
+                flash("Flight was updated.", "success")
+                return redirect(url_for('views.index'))
+
+            except Exception as e:
+                db.session.rollback()
+                flash("An error has occurred while updating the flight.", "error")
+                print(e)
+                return redirect(url_for('views.index'))
+
+    flash("There was a problem updating the flight.", "error")
+    return redirect(url_for('views.index'))
+    
 
 
 @views.route("/account", methods=["GET", "POST"])

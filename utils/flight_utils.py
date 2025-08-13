@@ -6,7 +6,7 @@ import airportsdata
 airports = airportsdata.load('IATA')
 
 
-def arrange_flights_data(flights_fetch_response, departure, destination):
+def arrange_flights_data(flights_fetch_response, departure, destination, adults):
     # KEY EXAMPLE VALUES:
     # airline: "TP"
     # departure: "LIS"
@@ -57,14 +57,19 @@ def arrange_flights_data(flights_fetch_response, departure, destination):
         print(destination_airport)
 
 
-        flights.append({"url": airline_url,
+        flights.append({"carrier_code": flight["itineraries"][0]["segments"][0]["carrierCode"] ,
+                        "flight_number": flight["itineraries"][0]["segments"][0]["number"],
+                        "url": airline_url,
                         "airline": airline_name,
+                        "departure_iata": flight["itineraries"][0]["segments"][0]["departure"]["iataCode"],
+                        "destination_iata": flight["itineraries"][0]["segments"][-1]["arrival"]["iataCode"],
                         "departure": departure_airport,
                         "destination": destination_airport,
                         "departure_date": departure_date,
                         "departure_arrival_time": f'{departure_hours} - {arrival_hours}',
                         "duration": duration_split[1],
                         "price": f'{flight["price"]["total"]}{flight["price"]["currency"]}',
+                        "adults": adults,
                         "bookable_seats": flight["numberOfBookableSeats"]
                         })
     return flights
