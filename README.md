@@ -2,6 +2,7 @@
 
 A Flask-based web application to search, track, and update flight offers. The app integrates with external flight API - Amadeus - and provides users with the ability to save, monitor, and update flight prices and availability over time.  
 
+
 ## Features  
 
 - **User Authentication** (Flask-Login)  
@@ -10,9 +11,9 @@ A Flask-based web application to search, track, and update flight offers. The ap
 - **Automatic departure validation** (flights past departure date are filtered or removed)  
 - **Update tracked flights**: refresh price, bookable seats, and last-checked timestamp  
 - **Session management** with Flask-Session (store last search, departure/destination info, etc.)  
-- **Clean RESTful routes** (`/save-flight`, `/update-flight`, `/results`, `/saved_results`)  
 - **Search parameters**: departure, destination, date, adults (1–9)  
 - **Database schema** with SQLAlchemy (TrackedFlights, User, etc.)  
+
 
 ## Tech Stack  
 
@@ -24,6 +25,14 @@ A Flask-based web application to search, track, and update flight offers. The ap
 - **Caching & Session**: Flask-Session, Redis
 - **Data Format**: REST/JSON  
 - **Environment**: Python 3.13 + dotenv for API keys  
+
+
+## Clean Flask MVC structure
+
+- **Models**: SQLAlchemy models (User, TrackedFlights)
+- **Views**: HTML templates rendered with Jinja2
+- **Controllers**: Flask route functions handling form submissions, session logic, and DB operations
+
 
 ## Installation  
 
@@ -61,6 +70,7 @@ A Flask-based web application to search, track, and update flight offers. The ap
    ```bash
    flask run
    ```
+
 
 ## Models Overview  
 

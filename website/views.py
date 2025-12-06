@@ -11,21 +11,25 @@ views = Blueprint("views", __name__)
 
 MAX_RESULTS = 25
 
+
+
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-
-
     if request.method == "POST":
 
         return render_template("index.html")
     
+    # Delete outdated saved flights before calling the landing page.
     db.session.query(TrackedFlights).filter(TrackedFlights.departure_date < date.today()).delete()
     db.session.commit()
     
+    # Fetch all saved flights and sort them into user_flights.
     user_flights = TrackedFlights.query.filter_by(user_id=current_user.id).order_by(asc(TrackedFlights.departure_date),asc(TrackedFlights.departure_arrival_time)).all()
     
     return render_template("index.html", flights=user_flights)
+
+
 
 @views.route("/delete-flight", methods=["POST"])
 @login_required
@@ -38,16 +42,19 @@ def delete_flight():
                                             flight_number = flight_number
                                             ).first()
 
-    print(flight)
+    #print(flight)
     
     if not flight:
-        flash("There was an error while trying to delete your flight. Try again later.", "error")
+        flash("There was an error while trying to delete your flight.", "error")
         return redirect(url_for('views.index'))
     
     db.session.delete(flight)
     db.session.commit()
+
     flash("Flight deleted successfully.", "success")
     return redirect(url_for('views.index'))
+
+
 
 @views.route("/results")
 @login_required
@@ -69,7 +76,7 @@ def results():
     fetch_flights = search_flight_offers(departure_iata, destination_iata, departure_date, adults, MAX_RESULTS)
     #print(fetch_flights)
     arranged_flights = arrange_flights_data(fetch_flights, departure, destination, adults)
-    print(arranged_flights)
+    #print(arranged_flights)
     
     session['departure'] = departure
     session['destination'] = destination
@@ -77,6 +84,8 @@ def results():
     session['last_search'] = json.dumps(arranged_flights)
 
     return render_template("results.html", departure=departure, destination=destination, departure_date=departure_date, flights=arranged_flights, if_results="results-page")
+
+
 
 @views.route("/save-flight")
 @login_required
@@ -107,7 +116,7 @@ def save_flight():
     print(seats) """
 
     if not airline or not departure or not destination:
-        flash("There was a problem saving your flight. Please try again later.", "error")
+        flash("There was a problem saving your flight. Missing data.", "error")
         return redirect(url_for('views.saved_results'))
     
     existing_flight = TrackedFlights.query.filter_by(user_id = current_user.id,
@@ -141,6 +150,7 @@ def save_flight():
     
         db.session.add(new_flight)
         db.session.commit()
+
         flash("Flight was saved.", "success")
 
     except Exception as e:
@@ -201,8 +211,8 @@ def search_flights():
         departure_date = request.form.get("departure_date")
         adults = int(request.form.get("adults"))
 
-        print(departure)
-        print(destination)
+        #print(departure)
+        #print(destination)
 
 
         if departure not in airport_list: 
@@ -289,6 +299,7 @@ def search_flights():
     return render_template("search.html", airport_list=airport_list)
 
 
+
 @views.route("/update-flight", methods=["POST"])
 @login_required
 def update_flight():
@@ -299,12 +310,12 @@ def update_flight():
     departure_date = request.form.get("departure_date")
     adults = request.form.get("adults")
 
-    print(carrier_code)
+    """print(carrier_code)
     print(flight_number)
     print(departure_iata)
     print(destination_iata)
     print(departure_date)
-    print(adults)
+    print(adults)"""
 
 
     flight = TrackedFlights.query.filter(TrackedFlights.user_id == current_user.id,
@@ -359,7 +370,7 @@ def update_flight():
 
     flash("There was a problem updating the flight.", "error")
     return redirect(url_for('views.index'))
-    
+
 
 
 @views.route("/account", methods=["GET", "POST"])

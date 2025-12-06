@@ -51,10 +51,9 @@ def arrange_flights_data(flights_fetch_response, departure, destination, adults)
         if len(arrival_hours) > 5:
             arrival_hours = arrival_hours[:5]
 
-        print(f'{departure_hours} - {arrival_hours}')
-
+        """print(f'{departure_hours} - {arrival_hours}')
         print(departure_airport)
-        print(destination_airport)
+        print(destination_airport)"""
 
 
         flights.append({"carrier_code": flight["itineraries"][0]["segments"][0]["carrierCode"] ,
