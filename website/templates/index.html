@@ -23,6 +23,7 @@
                 <thead>
                     <tr>
                         <th>Airline</th>
+                        <th>Flight Number</th>
                         <th>Departure</th>
                         <th>Destination</th>
                         <th>Date</th>
@@ -40,6 +41,7 @@
                     {% for flight in flights %}
                     <tr>
                         <td><a href="{{ flight.url }}" target="_blank">{{ flight.airline }}</a></td>
+                        <td>{{ flight.carrier_code}} {{flight.flight_number}}</td>
                         <td>{{ flight.departure }}</td>
                         <td>{{ flight.destination }}</td>
                         <td>{{ flight.departure_date }}</td>
